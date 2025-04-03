@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  primary:
+    image: postgres:14
+    container_name: primary
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./primary:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
+  standby:
+    image: postgres:14
+    container_name: standby
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./standby:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
+  arbiter:
+    image: alpine
+    container_name: arbiter
+    command: ["sh", "-c", "while true; do sleep 60; done"]
+    networks:
+      - pgnet
+
+networks:
+  pgnet:
