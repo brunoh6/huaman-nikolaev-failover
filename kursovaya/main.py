@@ -11,9 +11,8 @@ DB_CONFIG = {
 }
 
 LOG_FILE = 'failover_log.csv'
-was_success = True  # Tracks the last known state
+was_success = True
 
-# Create or overwrite the CSV with headers
 with open(LOG_FILE, 'w') as log:
     log.write('timestamp,status,message\n')
 
